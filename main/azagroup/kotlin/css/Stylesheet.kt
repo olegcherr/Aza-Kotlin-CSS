@@ -23,6 +23,12 @@ class Stylesheet(
 	operator fun String.div(obj: ASelector) = stringToSelector().div(obj)
 	operator fun String.mod(obj: ASelector) = stringToSelector().mod(obj)
 	operator fun String.minus(obj: ASelector) = stringToSelector().minus(obj)
+	fun String.lang(obj: ASelector, body: (Stylesheet.()->Unit)? = null) = stringToSelector().lang(obj, body)
+	fun String.not(obj: ASelector, body: (Stylesheet.()->Unit)? = null) = stringToSelector().not(obj, body)
+	fun String.nthChild(obj: ASelector, body: (Stylesheet.()->Unit)? = null) = stringToSelector().nthChild(obj, body)
+	fun String.nthLastChild(obj: ASelector, body: (Stylesheet.()->Unit)? = null) = stringToSelector().nthLastChild(obj, body)
+	fun String.nthLastOfType(obj: ASelector, body: (Stylesheet.()->Unit)? = null) = stringToSelector().nthLastOfType(obj, body)
+	fun String.nthOfType(obj: ASelector, body: (Stylesheet.()->Unit)? = null) = stringToSelector().nthOfType(obj, body)
 
 	private fun String.stringToSelector() = when (this[0]) {
 		'#' -> id(this.drop(1))

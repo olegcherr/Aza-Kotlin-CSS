@@ -164,6 +164,10 @@ class RenderTest
 			div.nthChild("even") { width = 1 }
 			div.a.nthChild(2) and span { width = 1 }
 		})
+		testRender(".items:not(li){width:1}.items:not(li),span{width:1}", {
+			"items".not(li) { width = 1 }
+			"items".not(li) and span { width = 1 }
+		})
 	}
 
 	@Test fun selectors_attributes() {
