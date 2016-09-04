@@ -71,11 +71,16 @@ class Stylesheet(
 
 			val lastIdx = properties.lastIndex
 			properties.forEachIndexed { i, property ->
-				if (property.value != null) {
-					sb.append(property.name).append(":").append(property.value)
-					if (i < lastIdx)
-						sb.append(";")
-				}
+				val value = property.value
+				if (value != null)
+					sb.run {
+						append(property.name)
+						append(":")
+						append(if (value is Number) cssDecimalFormat.format(value.toFloat()) else value)
+
+						if (i < lastIdx)
+							append(";")
+					}
 				else if (i == lastIdx && sb.last() == ';')
 					sb.setLength(sb.length-1)
 			}

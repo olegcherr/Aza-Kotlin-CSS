@@ -242,12 +242,13 @@ class RenderTest
 
 
 	@Test fun properties() {
-		testRender("a{width:auto;font-size:14px}") {
+		testRender("a{width:auto;font-size:14px;opacity:.2}") {
 			a {
 				width = auto
 				color = null
 				fontSize = 14.px
 				background = null
+				opacity = .2
 			}
 		}
 		testRender("div{background:-moz-linear-gradient(top, #000 0%, #fff 100%);background:-webkit-linear-gradient(top, #000 0%, #fff 100%);background:linear-gradient(top bottom, #000 0%, #fff 100%)}") {

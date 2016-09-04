@@ -2,9 +2,7 @@
 
 package azagroup.kotlin.css.dimens
 
-import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
-import java.util.Locale
+import azagroup.kotlin.css.cssDecimalFormat
 
 
 class LinearDimension(
@@ -13,16 +11,12 @@ class LinearDimension(
 ) {
 	override fun toString() = when (units) {
 		LinearUnits.AUTO -> "auto"
-		else -> "${decimalFormat.format(value)}$units"
+		else -> "${cssDecimalFormat.format(value)}$units"
 	}
 
 
 	companion object
 	{
-		private val symbols = DecimalFormatSymbols(Locale.ROOT).apply { decimalSeparator = '.' }
-		private val decimalFormat = DecimalFormat("#", symbols).apply { maximumFractionDigits = 5 }
-
-
 		fun fromString(s: String): LinearDimension? {
 			if (s == "auto")
 				return auto
