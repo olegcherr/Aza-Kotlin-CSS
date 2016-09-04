@@ -291,6 +291,6 @@ class RenderTest
 
 	private fun testRender(expected: String, callback: Stylesheet.()->Unit) {
 		val stylesheet = Stylesheet(callback)
-		assertEquals(expected, stylesheet.toString())
+		assertEquals(expected, stylesheet.render())
 	}
 }

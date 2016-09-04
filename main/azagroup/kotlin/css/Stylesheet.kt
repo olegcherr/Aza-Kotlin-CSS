@@ -3,6 +3,7 @@ package azagroup.kotlin.css
 import java.util.ArrayList
 
 
+@Suppress("unused")
 class Stylesheet(
 		callback: (Stylesheet.()->Unit)? = null
 ) : ASelector
@@ -56,7 +57,19 @@ class Stylesheet(
 	}
 
 
-	fun render(sb: StringBuilder, selectorPrefix: CharSequence = "", _spaceBefore: Boolean = true) {
+	fun moveDataTo(stylesheet: Stylesheet) {
+		stylesheet.properties.addAll(properties)
+		properties.clear()
+
+		stylesheet.children.addAll(children)
+		children.clear()
+	}
+
+
+	fun render() = buildString { render(this) }
+	fun renderTo(sb: StringBuilder) = render(sb)
+
+	private fun render(sb: StringBuilder, selectorPrefix: CharSequence = "", _spaceBefore: Boolean = true) {
 		val selector = selector
 		val atRule = atRule
 
@@ -103,16 +116,8 @@ class Stylesheet(
 			sb.append('}')
 	}
 
-	override fun toString() = buildString { render(this) }
 
-
-	fun moveDataTo(stylesheet: Stylesheet) {
-		stylesheet.properties.addAll(properties)
-		properties.clear()
-
-		stylesheet.children.addAll(children)
-		children.clear()
-	}
+	override fun toString() = "Stylesheet(sel:$selector; props:${properties.size}; childs:${children.size})"
 
 
 	class Property(
