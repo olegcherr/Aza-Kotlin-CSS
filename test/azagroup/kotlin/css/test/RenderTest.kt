@@ -55,10 +55,10 @@ class RenderTest
 			a and div.hover and span { width = 1 }
 			(a and div.hover and span) { width = 1 }
 		})
-		testRender("a:hover,div{width:1}a+span,div{width:1}a+span+a,div{width:1}", {
+		testRender("a:hover,div{width:1}a+span,div{width:1}a+span~a,div{width:1}", {
 			a.hover and div { width = 1 }
 			a % span and div { width = 1 }
-			a % span % a and div { width = 1 }
+			a % span - a and div { width = 1 }
 		})
 		testRender("div>a,div>span{width:1}div>a:hover,div>span:hover{width:1}div>a:hover,div>span:hover{width:1}", {
 			div / (a and span) { width = 1 }
