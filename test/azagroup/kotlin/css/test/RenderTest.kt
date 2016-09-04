@@ -10,9 +10,6 @@ import org.junit.Assert.*
 // CSS Selectors:
 // http://www.w3schools.com/cssref/css_selectors.asp
 
-// LESS Compiler:
-// http://winless.org/online-less-compiler
-
 class RenderTest
 {
 	@Test fun selectors() {
@@ -75,9 +72,10 @@ class RenderTest
 			}
 		})
 
-		testRender("a:hover{width:1}div:hover{width:1}span:hover{width:1}", {
+		testRender("a:hover{width:1}div:hover{width:1}span:hover{width:1}a>li{width:2}div>li{width:2}span>li{width:2}", {
 			a and div and span {
 				hover { width = 1 }
+				child.li { width = 2 }
 			}
 		})
 		testRender("a:hover,div:hover,span:hover{width:1}", {
@@ -85,7 +83,7 @@ class RenderTest
 		})
 	}
 
-	@Test fun selectors_withoutSpaces() {
+	@Test fun selectors_traversing() {
 		testRender("div>a{width:1}span>a{width:1}div>a{width:1}span>a{width:1}", {
 			div.child.a { width = 1 }
 			span / a { width = 1 }
@@ -153,9 +151,13 @@ class RenderTest
 		testRender(".class1~a{width:1}") {
 			".class1" - a { width = 1 }
 		}
+
+		testRender(".class1:hover{width:1}") {
+			".class1".hover { width = 1 }
+		}
 	}
 
-	@Test fun selectors_fn() {
+	@Test fun selectors_pseudoFn() {
 		testRender("div:not(span){width:1}div:not(a:hover) span{width:1}", {
 			div.not(span) { width = 1 }
 			div.not(a.hover).span { width = 1 }
@@ -167,6 +169,10 @@ class RenderTest
 		testRender(".items:not(li){width:1}.items:not(li),span{width:1}", {
 			"items".not(li) { width = 1 }
 			"items".not(li) and span { width = 1 }
+		})
+		testRender(".items:some{width:1}.items:some(){width:1}", {
+			"items".pseudo(":some") { width = 1 }
+			"items".pseudoFn(":some()") { width = 1 }
 		})
 	}
 

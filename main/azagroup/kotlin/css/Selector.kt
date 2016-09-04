@@ -64,15 +64,15 @@ class Selector(
 
 
 	operator infix fun div(obj: ASelector): Selector {
-		child
+		custom(">", false, false)
 		return mergeWith(obj)
 	}
 	operator infix fun mod(obj: ASelector): Selector {
-		next
+		custom("+", false, false)
 		return mergeWith(obj)
 	}
 	operator infix fun minus(obj: ASelector): Selector {
-		nextAll
+		custom("~", false, false)
 		return mergeWith(obj)
 	}
 
