@@ -1,0 +1,28 @@
+group 'azagroup.kotlin'
+version '1.0'
+
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+	}
+}
+
+apply plugin: 'kotlin'
+
+repositories {
+	mavenCentral()
+}
+
+sourceSets {
+	main.kotlin.srcDirs += 'main'
+	test.kotlin.srcDirs += 'test'
+}
+
+dependencies {
+	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+	testCompile "junit:junit:$junit_version"
+}
