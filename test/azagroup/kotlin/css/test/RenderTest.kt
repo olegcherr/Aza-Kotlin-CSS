@@ -188,6 +188,17 @@ class RenderTest
 		testRender("input[disabled][type*=dd],textarea[type*=dd]{width:1}", {
 			(input["disabled"] and textarea)["type", contains, "dd"] { width = 1 }
 		})
+		testRender("a[type=hidden]{width:10px}a[href^=https]{width:10px}", {
+			a["type", equals, "hidden"] { width = 10.px }
+			a["href", startsWith, "https"] { width = 10.px }
+		})
+		testRender("[disabled]{width:1}[disabled][hidden]{width:1}", {
+			attr("disabled") { width = 1 }
+			attr("disabled")["hidden"] { width = 1 }
+		})
+		testRender("#logo[type=main]{width:1}", {
+			"#logo"["type", "main"] { width = 1 }
+		})
 	}
 
 	@Test fun selectors_atRules() {

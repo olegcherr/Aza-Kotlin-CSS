@@ -165,12 +165,45 @@ class Stylesheet(
 
 
 	//
-	// OPERATORS
+	// SUGAR FOR STRINGS
 	//
 	operator fun CharSequence.invoke(body: Stylesheet.()->Unit) = stringToSelector().invoke(body)
 	operator fun CharSequence.div(obj: ASelector) = stringToSelector().div(obj)
 	operator fun CharSequence.mod(obj: ASelector) = stringToSelector().mod(obj)
 	operator fun CharSequence.minus(obj: ASelector) = stringToSelector().minus(obj)
+
+
+	//
+	// ATTRIBUTES
+	//
+	/*
+	TODO: Escape and add braces ?
+	https://mathiasbynens.be/notes/css-escapes
+	http://stackoverflow.com/questions/13987979/how-to-properly-escape-attribute-values-in-css-js-selector-attr-value
+	https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape
+	 */
+	fun CharSequence.attr(attrName: Any, body: (Stylesheet.()->Unit)? = null): Selector {
+		return when (this) {
+			is ASelector -> custom("[$attrName]", false, true, body)
+			else -> stringToSelector().attr(attrName, body)
+		}
+	}
+	fun CharSequence.attr(attrName: Any, attrValue: Any, body: (Stylesheet.()->Unit)? = null): Selector {
+		return when (this) {
+			is ASelector -> custom("[$attrName=$attrValue]", false, true, body)
+			else -> stringToSelector().attr(attrName, attrValue, body)
+		}
+	}
+	fun CharSequence.attr(attrName: Any, attrValue: Any, attrFiler: AttrFilter, body: (Stylesheet.()->Unit)? = null): Selector {
+		return when (this) {
+			is ASelector -> custom("[$attrName$attrFiler=$attrValue]", false, true, body)
+			else -> stringToSelector().attr(attrName, attrValue, attrFiler, body)
+		}
+	}
+
+	operator fun CharSequence.get(attrName: Any, body: (Stylesheet.()->Unit)? = null) = attr(attrName, body)
+	operator fun CharSequence.get(attrName: Any, attrValue: Any, body: (Stylesheet.()->Unit)? = null) = attr(attrName, attrValue, body)
+	operator fun CharSequence.get(attrName: Any, attrFiler: AttrFilter, attrValue: Any, body: (Stylesheet.()->Unit)? = null) = attr(attrName, attrValue, attrFiler, body)
 
 
 	//

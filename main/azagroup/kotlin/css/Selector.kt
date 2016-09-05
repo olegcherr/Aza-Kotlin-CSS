@@ -88,17 +88,6 @@ class Selector(
 	}
 
 
-	/**
-	 * TODO: Escape and add braces ?
-	 * https://mathiasbynens.be/notes/css-escapes
-	 * http://stackoverflow.com/questions/13987979/how-to-properly-escape-attribute-values-in-css-js-selector-attr-value
-	 * https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape
-	 */
-	operator fun get(attrName: Any) = append("[$attrName]", false, true)
-	operator fun get(attrName: Any, attrValue: Any) = append("[$attrName=$attrValue]", false, true)
-	operator fun get(attrName: Any, attrFiler: AttrFilter, attrValue: Any) = append("[$attrName$attrFiler=$attrValue]", false, true)
-
-
 	fun toList(selectorPrefix: CharSequence, _spaceBefore: Boolean) = rows.map { it.toString(selectorPrefix, _spaceBefore) }
 
 	fun toString(selectorPrefix: CharSequence, _spaceBefore: Boolean) = toList(selectorPrefix, _spaceBefore).joinToString(",")
