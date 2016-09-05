@@ -275,3 +275,6 @@ var Stylesheet.marqueeDirection by PropertyHandler("marquee-direction")
 var Stylesheet.marqueePlayCount by PropertyHandler("marquee-play-count")
 var Stylesheet.marqueeSpeed by PropertyHandler("marquee-speed")
 var Stylesheet.marqueeStyle by PropertyHandler("marquee-style")
+
+// Exotic
+var Stylesheet.zoom by PropertyHandler("zoom")
