@@ -1,6 +1,6 @@
 package azagroup.kotlin.css
 
-import azagroup.kotlin.css.colors.clr
+import azagroup.kotlin.css.colors.hex
 import kotlin.reflect.KProperty
 
 
@@ -13,7 +13,7 @@ class ColorPropertyHandler(
 
 	operator fun setValue(stylesheet: Stylesheet, property: KProperty<*>, value: Any?) {
 		stylesheet.setProperty(name, when (value) {
-			is Int -> clr(value)
+			is Int -> hex(value)
 			else -> value
 		})
 	}

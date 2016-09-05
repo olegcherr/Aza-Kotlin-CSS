@@ -3,6 +3,7 @@
 package azagroup.kotlin.css.colors
 
 
-fun clr(hex: String) = Color.fromHex(hex)!!
-fun clr(hex: Int) = Color.fromHex(hex)!!
-fun clr(r: Int, g: Int, b: Int, a: Int = 255) = Color.fromRgb(r, g, b, a)
+fun hex(hex: String) = Color.fromHex(hex)!!
+fun hex(hex: Int) = Color.fromHex(hex)!!
+fun rgb(r: Int, g: Int, b: Int) = Color.fromRgb(r, g, b)
+fun rgba(r: Int, g: Int, b: Int, a: Number = 1f) = Color.fromRgb(r, g, b, a.toFloat())

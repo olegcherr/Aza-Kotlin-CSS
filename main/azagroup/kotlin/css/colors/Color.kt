@@ -2,6 +2,8 @@
 
 package azagroup.kotlin.css.colors
 
+import azagroup.kotlin.css.cssDecimalFormat
+
 
 class Color(
 		var red: Float,
@@ -42,7 +44,7 @@ class Color(
 	}
 
 	override fun toString() = when {
-		alpha < 1f -> "rgba($redInt,$greenInt,$blueInt,${alpha.toString().take(5).trimEnd('0').trimEnd('.')})"
+		alpha < 1f -> "rgba($redInt,$greenInt,$blueInt,${cssDecimalFormat.format(alpha)})"
 		else -> toHexString()
 	}
 
@@ -152,13 +154,24 @@ class Color(
 
 	companion object
 	{
-		fun fromRgb(red: Int, green: Int, blue: Int, alpha: Int = 255)
-				= Color(red.toFloat() / 255f, green.toFloat() / 255f, blue.toFloat() / 255f, alpha.toFloat() / 255f)
+		fun fromRgb(red: Int, green: Int, blue: Int, alpha: Float = 1f)
+				= Color(red.toFloat() / 255f, green.toFloat() / 255f, blue.toFloat() / 255f, alpha)
 
 		fun fromHex(_s: String): Color? {
 			val s = if (_s[0] == '#') _s.drop(1) else _s
 
+			// In CSS4 the alpha channel comes last:
+			// https://www.w3.org/TR/css-color-4/#hex-notation
 			return when (s.length) {
+				1 -> { // 0x00f
+					val b = Integer.parseInt(s[0].toString(), 16)
+					return fromRgb(0, 0, b * 16 + b)
+				}
+				2 -> { // 0x0f0
+					val g = Integer.parseInt(s[0].toString(), 16)
+					val b = Integer.parseInt(s[1].toString(), 16)
+					return fromRgb(0, g * 16 + g, b * 16 + b)
+				}
 				3 -> {
 					val r = Integer.parseInt(s[0].toString(), 16)
 					val g = Integer.parseInt(s[1].toString(), 16)
@@ -170,7 +183,13 @@ class Color(
 					val g = Integer.parseInt(s[1].toString(), 16)
 					val b = Integer.parseInt(s[2].toString(), 16)
 					val a = Integer.parseInt(s[3].toString(), 16)
-					return fromRgb(r * 16 + r, g * 16 + g, b * 16 + b, a * 16 + a)
+					return fromRgb(r * 16 + r, g * 16 + g, b * 16 + b, 255f / a * 16 + a)
+				}
+				5 -> { // 0x0faabb
+					val r = Integer.parseInt(s.substring(0, 1), 16)
+					val g = Integer.parseInt(s.substring(1, 3), 16)
+					val b = Integer.parseInt(s.substring(3, 5), 16)
+					return fromRgb(r, g, b)
 				}
 				6 -> {
 					val r = Integer.parseInt(s.substring(0, 2), 16)
@@ -178,12 +197,19 @@ class Color(
 					val b = Integer.parseInt(s.substring(4, 6), 16)
 					return fromRgb(r, g, b)
 				}
+				7 -> { // 0x0faabbcc
+					val r = Integer.parseInt(s.substring(0, 1), 16)
+					val g = Integer.parseInt(s.substring(1, 3), 16)
+					val b = Integer.parseInt(s.substring(3, 5), 16)
+					val a = Integer.parseInt(s.substring(5, 7), 16)
+					return fromRgb(r, g, b, a / 255f)
+				}
 				8 -> {
 					val r = Integer.parseInt(s.substring(0, 2), 16)
 					val g = Integer.parseInt(s.substring(2, 4), 16)
 					val b = Integer.parseInt(s.substring(4, 6), 16)
 					val a = Integer.parseInt(s.substring(6, 8), 16)
-					return fromRgb(r, g, b, a)
+					return fromRgb(r, g, b, a / 255f)
 				}
 				else -> null
 			}
