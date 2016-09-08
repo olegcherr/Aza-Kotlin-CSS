@@ -17,7 +17,16 @@ class LinearDimension(
 
 	companion object
 	{
-		fun fromString(s: String): LinearDimension? {
+		fun from(value: Any): LinearDimension {
+			return when (value) {
+				is Number -> value.px
+				is String -> fromString(value)
+				is LinearDimension -> value
+				else -> throw IllegalArgumentException("Cannot create LinearDimension from ${value.javaClass.simpleName}")
+			}
+		}
+
+		fun fromString(s: String): LinearDimension {
 			if (s == "auto")
 				return auto
 
@@ -35,10 +44,13 @@ class LinearDimension(
 				s.endsWith("pt")    -> LinearUnits.PT
 				s.endsWith("pc")    -> LinearUnits.PC
 
-				else -> return null
+				else -> null
 			}
 
-			return LinearDimension(s.dropLast(2).toFloat(), units)
+			if (units != null)
+				return LinearDimension(s.dropLast(2).toFloat(), units)
+
+			return LinearDimension(s.toFloat(), LinearUnits.PX)
 		}
 	}
 }

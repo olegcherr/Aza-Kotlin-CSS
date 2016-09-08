@@ -19,6 +19,4 @@ val Number.pc: LinearDimension get() = dimen(this, LinearUnits.PC)
 inline private fun dimen(value: Number, units: LinearUnits) = LinearDimension(value.toFloat(), units)
 
 
-fun box(all: LinearDimension) = BoxDimensions(all, all, all, all)
-fun box(topBottom: LinearDimension, leftRight: LinearDimension) = BoxDimensions(topBottom, leftRight, topBottom, leftRight)
-fun box(top: LinearDimension, right: LinearDimension, bottom: LinearDimension, left: LinearDimension) = BoxDimensions(top, right, bottom, left)
+fun box(vararg args: Any) = BoxDimensions.from(*args)

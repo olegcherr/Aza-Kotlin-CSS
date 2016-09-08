@@ -298,6 +298,13 @@ class RenderTest : ATest
 			a { width = 17.257.ex }
 			a { width = 1.55555f.inch }
 		}
+		testRender("a{padding:10px}a{padding:10px}a{padding:10px 20%}a{padding:10px 0px 5px}a{padding:10px 0px 5px 20px}") {
+			a { padding = box(10.px) }
+			a { padding = box(10) }
+			a { padding = box(10.px, 20.percent) }
+			a { padding = box(10.px, 0, "5px") }
+			a { padding = box(10.px, 0, 5.px, 20.px) }
+		}
 	}
 
 
