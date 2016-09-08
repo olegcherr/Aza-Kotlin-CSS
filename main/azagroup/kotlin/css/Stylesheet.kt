@@ -22,8 +22,9 @@ class Stylesheet(
 	init { callback?.invoke(this) }
 
 
-	fun include(stylesheet: Stylesheet) {
+	fun include(stylesheet: Stylesheet): Stylesheet {
 		children.add(stylesheet)
+		return this
 	}
 
 	override fun custom(selector: String, _spaceBefore: Boolean, _spaceAfter: Boolean, body: (Stylesheet.() -> Unit)?): Selector {

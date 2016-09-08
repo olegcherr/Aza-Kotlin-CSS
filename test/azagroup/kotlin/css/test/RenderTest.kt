@@ -10,7 +10,7 @@ import org.junit.Assert.*
 // CSS Selectors:
 // http://www.w3schools.com/cssref/css_selectors.asp
 
-class RenderTest
+class RenderTest : ATest
 {
 	@Test fun selectors() {
 		testRender("", {
@@ -314,17 +314,12 @@ class RenderTest
 		assertEquals("rgba(255,255,255,.47)",   rgba(255,255,255,0.47).toString())
 		assertEquals("rgba(0,0,0,.019)",        rgba(0,0,0,0.019).toString())
 
-		testRender("a{color:#fff}a{color:rgba(255,100,0,.196)}a{color:#00f}a{color:#f2cacf}") {
+		testRender("a{color:#fff}a{color:rgba(255,100,0,.196)}a{color:#f00}a{color:#00f}a{color:#f2cacf}") {
 			a { color = hex("#fff") }
 			a { color = rgba(255,100,0,0.196) }
+			a { color = "#f00" }
 			a { color = 0x00f }
 			a { color = 0xf2cacf }
 		}
-	}
-
-
-	private fun testRender(expected: String, callback: Stylesheet.()->Unit) {
-		val stylesheet = Stylesheet(callback)
-		assertEquals(expected, stylesheet.render())
 	}
 }
