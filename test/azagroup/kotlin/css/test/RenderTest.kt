@@ -249,7 +249,7 @@ class RenderTest : ATest
 			}
 		}
 
-		testRender("@-webkit-keyframes anim1{from{top:0px}to{top:100px}}@keyframes anim2{0%{top:0px}100%{top:100px}}") {
+		testRender("@-webkit-keyframes anim1{from{top:0}to{top:100px}}@keyframes anim2{0%{top:0}100%{top:100px}}") {
 			at("-webkit-keyframes anim1") {
 				custom("from") { top = 0.px }
 				custom("to") { top = 100.px }
@@ -298,7 +298,7 @@ class RenderTest : ATest
 			a { width = 17.257.ex }
 			a { width = 1.55555f.inch }
 		}
-		testRender("a{padding:10px}a{padding:10px}a{padding:10px 20%}a{padding:10px 0px 5px}a{padding:10px 0px 5px 20px}") {
+		testRender("a{padding:10px}a{padding:10px}a{padding:10px 20%}a{padding:10px 0 5px}a{padding:10px 0 5px 20px}") {
 			a { padding = box(10.px) }
 			a { padding = box(10) }
 			a { padding = box(10.px, 20.percent) }

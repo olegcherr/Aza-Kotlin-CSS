@@ -11,7 +11,10 @@ class LinearDimension(
 ) {
 	override fun toString() = when (units) {
 		LinearUnits.AUTO -> "auto"
-		else -> "${cssDecimalFormat.format(value)}$units"
+		else -> {
+			val str = cssDecimalFormat.format(value)!!
+			if (str == "0") str else "$str$units"
+		}
 	}
 
 
