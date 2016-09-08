@@ -214,7 +214,7 @@ class Color(
 				else -> null
 			}
 		}
-		fun fromHex(value: Int) = fromHex(Integer.toHexString(value))
+		fun fromHex(value: Int) = fromHex(Integer.toHexString(value).padStart(6, '0'))
 
 		fun fromHSL(hsl: HSLValues): Color {
 			val color = Color(0f, 0f, 0f)

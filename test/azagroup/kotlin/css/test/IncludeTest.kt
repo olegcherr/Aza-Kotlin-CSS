@@ -8,7 +8,7 @@ class IncludeTest : ATest
 {
 	@Test fun basic() {
 		val css1 = Stylesheet {
-			a { color = 0xfff }
+			a { color = 0xffffff }
 		}
 		val css2 = Stylesheet {
 			a { color = 0xf2cacf }
@@ -23,9 +23,9 @@ class IncludeTest : ATest
 		}
 
 		val css = Stylesheet {
-			a { color = 0xfff }
+			a { color = 0xffffff }
 			hoverLinks()
-			a.active { color = 0xf00 }
+			a.active { color = 0xff0000 }
 		}
 
 		testRender("a{color:#fff}a:hover{color:#f2cacf}a:active{color:#f00}", css)

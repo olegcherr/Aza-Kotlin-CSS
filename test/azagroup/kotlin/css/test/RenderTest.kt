@@ -304,21 +304,21 @@ class RenderTest : ATest
 	@Test fun colors() {
 		assertEquals("#fff",                    hex("#fff").toString())
 		assertEquals("#fff",                    hex("#ffffff").toString())
-		assertEquals("#00f",                    hex(0x00f).toString())
-		assertEquals("#010",                    hex(0x010).toString())
-		assertEquals("#0fffff",                 hex(0x0fffff).toString())
-		assertEquals("rgba(15,255,255,.8)",     hex(0x0fffffcc).toString())
-		assertEquals("rgba(15,170,187,.8)",     hex(0x0faabbcc).toString())
+		assertEquals("#00000f",                 hex(0x00000f).toString())
+		assertEquals("#001",                    hex(0x000011).toString())
+		assertEquals("#000fff",                 hex(0x000FFf).toString())
+		assertEquals("#011111",                 hex(0x011111).toString())
 		assertEquals("#000aff",                 rgb(0,10,255).toString())
+		assertEquals("#0ff",                    rgb(0,255,255).toString())
 		assertEquals("rgba(0,10,255,0)",        rgba(0,10,255,0).toString())
 		assertEquals("rgba(255,255,255,.47)",   rgba(255,255,255,0.47).toString())
 		assertEquals("rgba(0,0,0,.019)",        rgba(0,0,0,0.019).toString())
 
-		testRender("a{color:#fff}a{color:rgba(255,100,0,.196)}a{color:#f00}a{color:#00f}a{color:#f2cacf}") {
+		testRender("a{color:#fff}a{color:rgba(255,100,0,.196)}a{color:#f00}a{color:#00000f}a{color:#f2cacf}") {
 			a { color = hex("#fff") }
 			a { color = rgba(255,100,0,0.196) }
 			a { color = "#f00" }
-			a { color = 0x00f }
+			a { color = 0x00000f }
 			a { color = 0xf2cacf }
 		}
 	}
