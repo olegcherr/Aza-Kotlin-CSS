@@ -198,7 +198,7 @@ var Stylesheet.transitionDelay by PropertyHandler("transition-delay")
 
 // Basic User Interface Properties
 var Stylesheet.boxSizing by PropertyHandler("box-sizing")
-var Stylesheet.content by PropertyHandler("content")
+var Stylesheet.content by ContentPropertyHandler("content")
 var Stylesheet.cursor by PropertyHandler("cursor")
 var Stylesheet.imeMode by PropertyHandler("ime-mode")
 var Stylesheet.navDown by PropertyHandler("nav-down")
