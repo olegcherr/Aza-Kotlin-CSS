@@ -45,6 +45,17 @@ class Selector(
 		return this
 	}
 
+	fun mergeWith(obj: ASelector): Selector {
+		when (obj) {
+			is Selector -> append(obj)
+			is Stylesheet -> {
+				append(obj.selector!!)
+				obj.moveDataTo(stylesheet)
+			}
+		}
+		return this
+	}
+
 
 	infix fun and(obj: ASelector): Selector {
 		when (obj) {
@@ -60,31 +71,6 @@ class Selector(
 			}
 			else -> throw RuntimeException("Unknown kind of corresponding object: ${obj.javaClass.simpleName}")
 		}
-	}
-
-
-	operator infix fun div(obj: ASelector): Selector {
-		custom(">", false, false)
-		return mergeWith(obj)
-	}
-	operator infix fun mod(obj: ASelector): Selector {
-		custom("+", false, false)
-		return mergeWith(obj)
-	}
-	operator infix fun minus(obj: ASelector): Selector {
-		custom("~", false, false)
-		return mergeWith(obj)
-	}
-
-	private fun mergeWith(obj: ASelector): Selector {
-		when (obj) {
-			is Selector -> append(obj)
-			is Stylesheet -> {
-				append(obj.selector!!)
-				obj.moveDataTo(stylesheet)
-			}
-		}
-		return this
 	}
 
 

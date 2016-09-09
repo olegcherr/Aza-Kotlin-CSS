@@ -84,12 +84,10 @@ class RenderTest : ATest
 	}
 
 	@Test fun selectors_traversing() {
-		testRender("div>a{width:1}span>a{width:1}div>a{width:1}span>a{width:1}", {
+		testRender("div>a{width:1}span>a{width:1}span a{width:1}", {
 			div.child.a { width = 1 }
 			span / a { width = 1 }
-			div and span {
-				child.a { width = 1 }
-			}
+			span..a { width = 1 }
 		})
 
 		testRender("div+a{width:1}span+a{width:1}div+a{width:1}span+a{width:1}", {
@@ -100,7 +98,10 @@ class RenderTest : ATest
 			}
 		})
 
-		testRender("div span a,div>a{width:1}", {
+		testRender("div>a{width:1}span>a{width:1}div span a,div>a{width:1}", {
+			div and span {
+				child.a { width = 1 }
+			}
 			div {
 				(span and child).a { width = 1 }
 			}
@@ -154,6 +155,15 @@ class RenderTest : ATest
 
 		testRender(".class1:hover{width:1}") {
 			".class1".hover { width = 1 }
+		}
+
+		testRender(".class1 div{width:1}.class1 .class2{width:1}") {
+			".class1".div { width = 1 }
+			".class1".children.c("class2") { width = 1 }
+		}
+		testRender(".class1 .class2{width:1}.class1 div{width:1}") {
+			"class1".."class2" { width = 1 }
+			"class1"..div { width = 1 }
 		}
 	}
 

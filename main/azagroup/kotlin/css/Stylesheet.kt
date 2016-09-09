@@ -141,37 +141,42 @@ class Stylesheet(
 	fun CharSequence.custom(selector: String, _spaceBefore: Boolean = true, _spaceAfter: Boolean = true, body: (Stylesheet.()->Unit)? = null): Selector {
 		return when (this) {
 			is ASelector -> custom(selector, _spaceBefore, _spaceAfter, body)
-			else -> stringToSelector().custom(selector, _spaceBefore, _spaceAfter, body)
+			else -> toSelector().custom(selector, _spaceBefore, _spaceAfter, body)
 		}
 	}
 	fun CharSequence.pseudo(selector: String, body: (Stylesheet.()->Unit)? = null): Selector {
 		return when (this) {
 			is ASelector -> pseudo(selector, body)
-			else -> stringToSelector().pseudo(selector, body)
+			else -> toSelector().pseudo(selector, body)
 		}
 	}
 	fun CharSequence.pseudoFn(selector: String, body: (Stylesheet.()->Unit)? = null): Selector {
 		return when (this) {
 			is ASelector -> pseudoFn(selector, body)
-			else -> stringToSelector().pseudoFn(selector, body)
+			else -> toSelector().pseudoFn(selector, body)
 		}
 	}
 
-	private fun CharSequence.stringToSelector() = when (this[0]) {
-		'.' -> this@Stylesheet.c(this.drop(1))
-		'#' -> this@Stylesheet.id(this.drop(1))
-		'@' -> this@Stylesheet.at(this.drop(1)).selector!!
-		else -> this@Stylesheet.c(this)
+	private fun CharSequence.toSelector() = when (this) {
+		is Selector -> this
+		is Stylesheet -> throw IllegalArgumentException("Cannot use this method on Stylesheet")
+		else -> when (this[0]) {
+			'.' -> this@Stylesheet.c(this.drop(1))
+			'#' -> this@Stylesheet.id(this.drop(1))
+			'@' -> this@Stylesheet.at(this.drop(1)).selector!!
+			else -> this@Stylesheet.c(this)
+		}
 	}
 
 
 	//
-	// SUGAR FOR STRINGS
+	// SUGAR
 	//
-	operator fun CharSequence.invoke(body: Stylesheet.()->Unit) = stringToSelector().invoke(body)
-	operator fun CharSequence.div(obj: ASelector) = stringToSelector().div(obj)
-	operator fun CharSequence.mod(obj: ASelector) = stringToSelector().mod(obj)
-	operator fun CharSequence.minus(obj: ASelector) = stringToSelector().minus(obj)
+	operator fun CharSequence.invoke(body: Stylesheet.()->Unit) = toSelector().invoke(body)
+	operator fun CharSequence.div(obj: ASelector) = toSelector().child.mergeWith(obj)
+	operator fun CharSequence.mod(obj: ASelector) = toSelector().next.mergeWith(obj)
+	operator fun CharSequence.minus(obj: ASelector) = toSelector().nextAll.mergeWith(obj)
+	operator fun CharSequence.rangeTo(obj: ASelector) = toSelector().children.mergeWith(obj)
 
 
 	//
@@ -186,19 +191,19 @@ class Stylesheet(
 	fun CharSequence.attr(attrName: Any, body: (Stylesheet.()->Unit)? = null): Selector {
 		return when (this) {
 			is ASelector -> custom("[$attrName]", false, true, body)
-			else -> stringToSelector().attr(attrName, body)
+			else -> toSelector().attr(attrName, body)
 		}
 	}
 	fun CharSequence.attr(attrName: Any, attrValue: Any, body: (Stylesheet.()->Unit)? = null): Selector {
 		return when (this) {
 			is ASelector -> custom("[$attrName=$attrValue]", false, true, body)
-			else -> stringToSelector().attr(attrName, attrValue, body)
+			else -> toSelector().attr(attrName, attrValue, body)
 		}
 	}
 	fun CharSequence.attr(attrName: Any, attrValue: Any, attrFiler: AttrFilter, body: (Stylesheet.()->Unit)? = null): Selector {
 		return when (this) {
 			is ASelector -> custom("[$attrName$attrFiler=$attrValue]", false, true, body)
-			else -> stringToSelector().attr(attrName, attrValue, attrFiler, body)
+			else -> toSelector().attr(attrName, attrValue, attrFiler, body)
 		}
 	}
 
@@ -217,6 +222,7 @@ class Stylesheet(
 	//
 	// TRAVERSING
 	//
+	val CharSequence.children: Selector get() = custom(" ", false, false)
 	val CharSequence.child: Selector get() = custom(">", false, false)
 	val CharSequence.next: Selector get() = custom("+", false, false)
 	val CharSequence.nextAll: Selector get() = custom("~", false, false)
