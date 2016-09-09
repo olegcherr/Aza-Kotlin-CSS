@@ -263,11 +263,13 @@ class RenderTest : ATest
 
 
 	@Test fun properties() {
-		testRender("a{width:auto;font-size:14px;opacity:.2}") {
+		testRender("a{width:auto;height:10;font-size:14px;line-height:0;opacity:.2}") {
 			a {
-				width = auto
+				width = AUTO
+				height = 10
 				color = null
 				fontSize = 14.px
+				lineHeight = 0
 				background = null
 				opacity = .2
 			}
@@ -291,7 +293,7 @@ class RenderTest : ATest
 
 	@Test fun dimensions() {
 		testRender("a{width:auto}a{width:1px}a{width:.2em}a{width:50%}a{width:17.257ex}a{width:1.55555in}") {
-			a { width = auto }
+			a { width = AUTO }
 			a { width = 1.px }
 			a { width = .2.em }
 			a { width = 50f.percent }

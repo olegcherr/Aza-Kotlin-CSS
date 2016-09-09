@@ -9,12 +9,9 @@ class LinearDimension(
 		var value: Float,
 		var units: LinearUnits
 ) {
-	override fun toString() = when (units) {
-		LinearUnits.AUTO -> "auto"
-		else -> {
-			val str = cssDecimalFormat.format(value)!!
-			if (str == "0") str else "$str$units"
-		}
+	override fun toString(): String {
+		val str = cssDecimalFormat.format(value)!!
+		return if (str == "0") str else "$str$units"
 	}
 
 
@@ -30,9 +27,6 @@ class LinearDimension(
 		}
 
 		fun fromString(s: String): LinearDimension {
-			if (s == "auto")
-				return auto
-
 			if (s.endsWith('%'))
 				return LinearDimension(s.dropLast(1).toFloat(), LinearUnits.PERCENT)
 

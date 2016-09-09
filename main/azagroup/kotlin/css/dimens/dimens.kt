@@ -3,8 +3,6 @@
 package azagroup.kotlin.css.dimens
 
 
-val auto: LinearDimension = LinearDimension(0f, LinearUnits.AUTO)
-
 val Number.px: LinearDimension get() = dimen(this, LinearUnits.PX)
 val Number.em: LinearDimension get() = dimen(this, LinearUnits.EM)
 val Number.percent: LinearDimension get() = dimen(this, LinearUnits.PERCENT)

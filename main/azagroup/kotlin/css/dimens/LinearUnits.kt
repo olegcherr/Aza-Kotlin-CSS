@@ -15,9 +15,8 @@ enum class LinearUnits(
 	CM("cm"),
 	MM("mm"),
 	PT("pt"),   // 1/72 in
-	PC("pc"),   // 12 pt
+	PC("pc");   // 12 pt;
 
-	AUTO("auto");
 
 	override fun toString() = value
 }
