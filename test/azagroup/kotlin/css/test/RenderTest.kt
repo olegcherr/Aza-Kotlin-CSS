@@ -124,25 +124,15 @@ class RenderTest : ATest
 			c("class1") { width = 1 }
 			id("id1") { width = 2 }
 		}
-		testRender("div#id1>a.class1{width:1}") {
-			div.id("id1") {
-				child.a.c("class1") { width = 1 }
-			}
-		}
 
-		testRender(".class1{width:1}") {
+		testRender(".class1{width:1}#id1{width:2}") {
 			"class1" { width = 1 }
-		}
-		testRender("#id1{width:1}") {
-			"#id1" { width = 1 }
-		}
-		testRender("div,.class1{width:1}div a{width:2}.class1 a{width:2}") {
-			div and "class1" {
-				width = 1
-				a { width = 2 }
-			}
+			"#id1" { width = 2 }
 		}
 
+		testRender(".class1:hover{width:1}") {
+			".class1".hover { width = 1 }
+		}
 		testRender(".class1>a{width:1}") {
 			".class1" / a { width = 1 }
 		}
@@ -153,8 +143,23 @@ class RenderTest : ATest
 			".class1" - a { width = 1 }
 		}
 
-		testRender(".class1:hover{width:1}") {
-			".class1".hover { width = 1 }
+		testRender("div#id1>a.class1{width:1}") {
+			div.id("id1") {
+				child.a.c("class1") { width = 1 }
+			}
+		}
+
+		testRender("div,.class1{width:1}div a{width:2}.class1 a{width:2}") {
+			div and "class1" {
+				width = 1
+				a { width = 2 }
+			}
+		}
+		testRender(".class1,.class2{width:1}.class1 a{width:2}.class2 a{width:2}") {
+			"class1" and "class2" {
+				width = 1
+				a { width = 2 }
+			}
 		}
 
 		testRender(".class1 div{width:1}.class1 .class2{width:1}") {

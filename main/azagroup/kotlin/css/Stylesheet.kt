@@ -157,6 +157,23 @@ class Stylesheet(
 		}
 	}
 
+	infix fun CharSequence.and(obj: ASelector): Selector {
+		val sel = toSelector()
+		when (obj) {
+			is Selector -> {
+				for (row in obj.rows)
+					sel.rows.add(row)
+				return sel
+			}
+			is Stylesheet -> {
+				val selector = obj.selector!!
+				selector.rows.addAll(0, sel.rows)
+				return selector
+			}
+			else -> throw RuntimeException("Unknown kind of corresponding object: ${obj.javaClass.simpleName}")
+		}
+	}
+
 	private fun CharSequence.toSelector() = when (this) {
 		is Selector -> this
 		is Stylesheet -> throw IllegalArgumentException("Cannot use this method on Stylesheet")

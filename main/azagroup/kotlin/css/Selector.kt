@@ -47,23 +47,6 @@ class Selector(
 	}
 
 
-	infix fun and(obj: ASelector): Selector {
-		when (obj) {
-			is Selector -> {
-				for (row in obj.rows)
-					rows.add(row)
-				return this
-			}
-			is Stylesheet -> {
-				val selector = obj.selector!!
-				selector.rows.addAll(0, rows)
-				return selector
-			}
-			else -> throw RuntimeException("Unknown kind of corresponding object: ${obj.javaClass.simpleName}")
-		}
-	}
-
-
 	fun toList(selectorPrefix: CharSequence, _spaceBefore: Boolean) = rows.map { it.toString(selectorPrefix, _spaceBefore) }
 
 	fun toString(selectorPrefix: CharSequence, _spaceBefore: Boolean) = toList(selectorPrefix, _spaceBefore).joinToString(",")
