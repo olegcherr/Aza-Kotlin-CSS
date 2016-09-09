@@ -30,7 +30,7 @@ class Stylesheet(
 	override fun custom(selector: String, _spaceBefore: Boolean, _spaceAfter: Boolean, body: (Stylesheet.() -> Unit)?): Selector {
 		val stylesheet = Stylesheet()
 		val sel = Selector(stylesheet)
-		sel.append(selector.toString(), _spaceBefore, _spaceAfter)
+		sel.custom(selector, _spaceBefore, _spaceAfter)
 
 		stylesheet.selector = sel
 		include(stylesheet)
@@ -173,10 +173,10 @@ class Stylesheet(
 	// SUGAR
 	//
 	operator fun CharSequence.invoke(body: Stylesheet.()->Unit) = toSelector().invoke(body)
-	operator fun CharSequence.div(obj: ASelector) = toSelector().child.mergeWith(obj)
-	operator fun CharSequence.mod(obj: ASelector) = toSelector().next.mergeWith(obj)
-	operator fun CharSequence.minus(obj: ASelector) = toSelector().nextAll.mergeWith(obj)
-	operator fun CharSequence.rangeTo(obj: ASelector) = toSelector().children.mergeWith(obj)
+	operator fun CharSequence.div(obj: ASelector) = child.append(obj)
+	operator fun CharSequence.mod(obj: ASelector) = next.append(obj)
+	operator fun CharSequence.minus(obj: ASelector) = nextAll.append(obj)
+	operator fun CharSequence.rangeTo(obj: ASelector) = children.append(obj)
 
 
 	//

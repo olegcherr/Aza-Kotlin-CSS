@@ -16,38 +16,28 @@ class Selector(
 	}
 
 	override fun custom(selector: String, _spaceBefore: Boolean, _spaceAfter: Boolean, body: (Stylesheet.() -> Unit)?): Selector {
-		append(selector.toString(), _spaceBefore, _spaceAfter)
+		if (rows.isEmpty())
+			rows.add(Row(selector, _spaceBefore, _spaceAfter))
+
+		else for (row in rows)
+			row.append(selector, _spaceBefore, _spaceAfter)
+
 		body?.invoke(stylesheet)
 		return this
 	}
 
-
-	fun append(str: CharSequence, _spaceBefore: Boolean, _spaceAfter: Boolean): Selector {
-		if (rows.isEmpty())
-			rows.add(Row(str, _spaceBefore, _spaceAfter))
-
-		else for (row in rows)
-			row.append(str, _spaceBefore, _spaceAfter)
-
-		return this
-	}
-
-	fun append(selector: Selector): Selector {
-		val newRows = ArrayList<Row>(rows.size * selector.rows.size)
-		for (r1 in rows)
-			for (r2 in selector.rows) {
-				val r = Row(r1.sb, r1.spaceBefore, r1.spaceAfter)
-				r.append(r2.sb, r2.spaceBefore, r2.spaceAfter)
-				newRows.add(r)
-			}
-
-		rows = newRows
-		return this
-	}
-
-	fun mergeWith(obj: ASelector): Selector {
+	fun append(obj: ASelector): Selector {
 		when (obj) {
-			is Selector -> append(obj)
+			is Selector -> {
+				val newRows = ArrayList<Row>(rows.size * obj.rows.size)
+				for (r1 in rows)
+					for (r2 in obj.rows) {
+						val r = Row(r1.sb, r1.spaceBefore, r1.spaceAfter)
+						r.append(r2.sb, r2.spaceBefore, r2.spaceAfter)
+						newRows.add(r)
+					}
+				rows = newRows
+			}
 			is Stylesheet -> {
 				append(obj.selector!!)
 				obj.moveDataTo(stylesheet)
