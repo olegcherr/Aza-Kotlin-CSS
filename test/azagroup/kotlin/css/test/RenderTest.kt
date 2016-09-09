@@ -130,6 +130,11 @@ class RenderTest : ATest
 			"#id1" { width = 2 }
 		}
 
+		testRender(".class1.class2{width:1}#id1.class1{width:2}") {
+			".class1.class2" { width = 1 }
+			"#id1.class1" { width = 2 }
+		}
+
 		testRender(".class1:hover{width:1}") {
 			".class1".hover { width = 1 }
 		}
@@ -162,13 +167,19 @@ class RenderTest : ATest
 			}
 		}
 
-		testRender(".class1 div{width:1}.class1 .class2{width:1}") {
+		testRender(".class1 div{width:1}.class1 .class2{width:2}") {
 			".class1".div { width = 1 }
-			".class1".children.c("class2") { width = 1 }
+			".class1".children.c("class2") { width = 2 }
 		}
-		testRender(".class1 .class2{width:1}.class1 div{width:1}") {
+		testRender(".class1 .class2{width:1}.class1 div{width:2}div #id1{width:3}") {
 			"class1".."class2" { width = 1 }
-			"class1"..div { width = 1 }
+			"class1"..div { width = 2 }
+			div.."#id1" { width = 3 }
+		}
+		testRender(".class1 .class2{width:1}.class1 .class2 .class3{width:2}.class1 .class2 .class3 .class4{width:3}") {
+			".class1"..c("class2") { width = 1 }
+			".class1"..c("class2")..c("class3") { width = 2 }
+			".class1"..c("class2")..c("class3").."class4" { width = 3 }
 		}
 	}
 

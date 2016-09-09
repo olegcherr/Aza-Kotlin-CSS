@@ -37,6 +37,7 @@ class Selector(
 						newRows.add(r)
 					}
 				rows = newRows
+				obj.stylesheet.moveDataTo(stylesheet)
 			}
 			is Stylesheet -> {
 				append(obj.selector!!)
