@@ -207,10 +207,12 @@ class RenderTest : ATest
 			input["disabled"] { width = 1 }
 			input["disabled", true].hover { width = 1 }
 		})
+
 		testRender("input[disabled],textarea[disabled]{width:1}input[disabled][type=hidden],textarea[disabled][type=hidden]{width:1}", {
 			(input and textarea)["disabled"] { width = 1 }
 			(input and textarea)["disabled"]["type", "hidden"] { width = 1 }
 		})
+
 		testRender("input[disabled][type*=dd],textarea[type*=dd]{width:1}", {
 			(input["disabled"] and textarea)["type", contains, "dd"] { width = 1 }
 		})
@@ -218,12 +220,18 @@ class RenderTest : ATest
 			a["type", equals, "hidden"] { width = 10.px }
 			a["href", startsWith, "https"] { width = 10.px }
 		})
+
 		testRender("[disabled]{width:1}[disabled][hidden]{width:1}", {
 			attr("disabled") { width = 1 }
 			attr("disabled")["hidden"] { width = 1 }
 		})
+
 		testRender("#logo[type=main]{width:1}", {
 			"#logo"["type", "main"] { width = 1 }
+		})
+
+		testRender("""a[href^="http://"]{width:10px}""", {
+			a["href", startsWith, "http://"] { width = 10.px }
 		})
 	}
 

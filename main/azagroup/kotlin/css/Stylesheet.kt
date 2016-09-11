@@ -213,13 +213,13 @@ class Stylesheet(
 	}
 	fun CharSequence.attr(attrName: Any, attrValue: Any, body: (Stylesheet.()->Unit)? = null): Selector {
 		return when (this) {
-			is ASelector -> custom("[$attrName=$attrValue]", false, true, body)
+			is ASelector -> custom("[$attrName=${escapeAttrValue(attrValue.toString())}]", false, true, body)
 			else -> toSelector().attr(attrName, attrValue, body)
 		}
 	}
 	fun CharSequence.attr(attrName: Any, attrValue: Any, attrFiler: AttrFilter, body: (Stylesheet.()->Unit)? = null): Selector {
 		return when (this) {
-			is ASelector -> custom("[$attrName$attrFiler=$attrValue]", false, true, body)
+			is ASelector -> custom("[$attrName$attrFiler=${escapeAttrValue(attrValue.toString())}]", false, true, body)
 			else -> toSelector().attr(attrName, attrValue, attrFiler, body)
 		}
 	}
@@ -227,6 +227,12 @@ class Stylesheet(
 	operator fun CharSequence.get(attrName: Any, body: (Stylesheet.()->Unit)? = null) = attr(attrName, body)
 	operator fun CharSequence.get(attrName: Any, attrValue: Any, body: (Stylesheet.()->Unit)? = null) = attr(attrName, attrValue, body)
 	operator fun CharSequence.get(attrName: Any, attrFiler: AttrFilter, attrValue: Any, body: (Stylesheet.()->Unit)? = null) = attr(attrName, attrValue, attrFiler, body)
+
+	private fun escapeAttrValue(str: String): String {
+		// http://stackoverflow.com/questions/5578845/css-attribute-selectors-the-rules-on-quotes-or-none
+		val isIdentifier = str.all { it >= '0' && it <= '9' || it >= 'a' && it <= 'z' || it >= 'A' && it <= 'Z' || it == '-' || it == '_' }
+		return if (isIdentifier) str else "\"${str.replace("\"", "\\\"")}\""
+	}
 
 
 	//
