@@ -188,8 +188,8 @@ class RenderTest : ATest
 			div.not(span) { width = 1 }
 			div.not(a.hover).span { width = 1 }
 		})
-		testRender("div:nth-child(even){width:1}div a:nth-child(2),span{width:1}", {
-			div.nthChild("even") { width = 1 }
+		testRender("*:nth-child(even){width:1}div a:nth-child(2),span{width:1}", {
+			any.nthChild(EVEN) { width = 1 }
 			div.a.nthChild(2) and span { width = 1 }
 		})
 		testRender(".items:not(li){width:1}.items:not(li),span{width:1}", {

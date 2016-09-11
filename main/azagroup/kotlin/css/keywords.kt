@@ -7,6 +7,9 @@ package azagroup.kotlin.css
 // https://www.w3.org/TR/CSS21/syndata.html#color-units
 // https://hackage.haskell.org/package/highlighting-kate-0.6.2.1/src/xml/css.xml
 
+const val EVEN = "even"
+const val ODD = "odd"
+
 const val _EPUB_HYPHENS = "-epub-hyphens"
 const val ABOVE = "above"
 const val ABSOLUTE = "absolute"
