@@ -236,11 +236,11 @@ class RenderTest : ATest
 	}
 
 	@Test fun selectors_atRules() {
-		testRender("@media (min-width: 100px){div{width:1}}@media (min-width: 100px) and (max-width: 200px){div{width:2}}") {
+		testRender("@media (min-width: 100px){div{width:1}}@media (min-width: 100px) and (orientation: landscape){div{width:2}}") {
 			media("min-width: 100px") {
 				div { width = 1 }
 			}
-			media("min-width: 100px", "max-width: 200px") {
+			media("min-width: 100px", "orientation: landscape") {
 				div { width = 2 }
 			}
 		}
@@ -277,20 +277,18 @@ class RenderTest : ATest
 			}
 		}
 
-		testRender("@media all and (not handheld){div{width:1}}") {
-			mediaRaw("all and (not handheld)") {
+		testRender("@media not screen and (color), print and (color){div{width:1}}") {
+			mediaRaw("not screen and (color), print and (color)") {
 				div { width = 1 }
 			}
 		}
 
-		testRender("@-webkit-keyframes anim1{from{top:0}to{top:100px}}@keyframes anim2{0%{top:0}100%{top:100px}}") {
-			at("-webkit-keyframes anim1") {
+		testRender("@-webkit-keyframes animation1{from{top:0}30%{top:50px}68%,72%{top:70px}to{top:100px}}") {
+			at("-webkit-keyframes animation1") {
 				custom("from") { top = 0.px }
+				custom("30%") { top = 50.px }
+				custom("68%,72%") { top = 70.px }
 				custom("to") { top = 100.px }
-			}
-			"@keyframes anim2" {
-				custom("0%") { top = 0.px }
-				custom("100%") { top = 100.px }
 			}
 		}
 	}
@@ -334,12 +332,13 @@ class RenderTest : ATest
 			a { width = 17.257.ex }
 			a { width = 1.55555f.inch }
 		}
-		testRender("a{padding:10px}a{padding:10px}a{padding:10px 20%}a{padding:10px 0 5px}a{padding:10px 0 5px 20px}") {
+		testRender("a{padding:10px}a{padding:10px}a{padding:10px 20%}a{padding:10px 0 5px}a{padding:10px 0 5px 20px}a{padding:10px 10px 5px 0}") {
 			a { padding = box(10.px) }
 			a { padding = box(10) }
 			a { padding = box(10.px, 20.percent) }
 			a { padding = box(10.px, 0, "5px") }
 			a { padding = box(10.px, 0, 5.px, 20.px) }
+			a { padding = box(10, 10, 5, 0) }
 		}
 	}
 
