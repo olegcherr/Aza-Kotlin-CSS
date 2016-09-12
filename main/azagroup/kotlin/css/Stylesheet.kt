@@ -133,11 +133,8 @@ class Stylesheet(
 		return stylesheet
 	}
 
-	fun mediaRaw(query: Any, body: (Stylesheet.()->Unit)? = null)
-			= at("media $query", body)
-
 	fun media(vararg conditions: Any, body: (Stylesheet.()->Unit)? = null)
-			= mediaRaw("(${conditions.joinToString(") and (")})", body)
+			= at("media (${conditions.joinToString(") and (")})", body)
 
 
 	//

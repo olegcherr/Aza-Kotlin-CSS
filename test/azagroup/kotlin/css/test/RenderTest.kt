@@ -287,12 +287,6 @@ class RenderTest : ATest
 			}
 		}
 
-		testRender("@media not screen and (color), print and (color){div{width:1}}") {
-			mediaRaw("not screen and (color), print and (color)") {
-				div { width = 1 }
-			}
-		}
-
 		testRender("@-webkit-keyframes animation1{from{top:0}30%{top:50px}68%,72%{top:70px}to{top:100px}}") {
 			at("-webkit-keyframes animation1") {
 				custom("from") { top = 0.px }
