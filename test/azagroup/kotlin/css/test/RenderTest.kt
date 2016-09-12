@@ -307,7 +307,16 @@ class RenderTest : ATest
 				src = "local('☺'), url('GraublauWeb.woff') format('woff'), url('GraublauWeb.ttf') format('truetype')"
 			}
 		}
+
+		testRender("@media (min-width: 100px) and (orientation: landscape){div{width:1}}") {
+			myMediaQuery {
+				div { width = 1 }
+			}
+		}
 	}
+
+	private fun Stylesheet.myMediaQuery(body: Stylesheet.()->Unit)
+			= media("min-width: 100px", "orientation: landscape").invoke(body)
 
 
 	@Test fun properties() {

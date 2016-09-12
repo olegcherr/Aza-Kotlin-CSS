@@ -178,7 +178,7 @@ class Stylesheet(
 
 	private fun CharSequence.toSelector() = when (this) {
 		is Selector -> this
-		is Stylesheet -> throw IllegalArgumentException("Cannot use this method on Stylesheet")
+		is Stylesheet -> this.selector!!
 		else -> when (this[0]) {
 			'.' -> this@Stylesheet.c(this.drop(1))
 			'#' -> this@Stylesheet.id(this.drop(1))
