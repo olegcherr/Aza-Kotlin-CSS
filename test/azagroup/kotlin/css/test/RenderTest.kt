@@ -276,6 +276,16 @@ class RenderTest : ATest
 				}
 			}
 		}
+		testRender("@media (min-width: 100px){div{width:1}}@media (min-width: 100px){a{width:1}}@media (min-width: 200px){div{width:2}}@media (min-width: 200px){a{width:2}}") {
+			(div and a) {
+				media("min-width: 100px") {
+					width = 1
+				}
+				media("min-width: 200px") {
+					width = 2
+				}
+			}
+		}
 
 		testRender("@media not screen and (color), print and (color){div{width:1}}") {
 			mediaRaw("not screen and (color), print and (color)") {
@@ -289,6 +299,18 @@ class RenderTest : ATest
 				custom("30%") { top = 50.px }
 				custom("68%,72%") { top = 70.px }
 				custom("to") { top = 100.px }
+			}
+		}
+		testRender("@font-face{font-family:Bitstream Vera Serif Bold;src:url(VeraSeBd.ttf);font-weight:bold}@font-face{font-family:Graublau Web;src:url(GraublauWeb.eot);src:local('☺'), url('GraublauWeb.woff') format('woff'), url('GraublauWeb.ttf') format('truetype')}") {
+			at("font-face") {
+				fontFamily = "Bitstream Vera Serif Bold"
+				src = url("VeraSeBd.ttf")
+				fontWeight = BOLD
+			}
+			at("font-face") {
+				fontFamily = "Graublau Web"
+				src = url("GraublauWeb.eot")
+				src = "local('☺'), url('GraublauWeb.woff') format('woff'), url('GraublauWeb.ttf') format('truetype')"
 			}
 		}
 	}

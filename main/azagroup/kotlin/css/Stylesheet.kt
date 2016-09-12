@@ -70,8 +70,11 @@ class Stylesheet(
 
 
 		if (properties.isNotEmpty()) {
-			if (selector != null)
-				sb.append(selector.toString(selectorPrefix, _spaceBefore)).append('{')
+			val selectorStr = selector?.toString(selectorPrefix, _spaceBefore)
+			val hasSelector = !selectorStr.isNullOrEmpty()
+
+			if (hasSelector)
+				sb.append(selectorStr).append('{')
 
 			val lastIdx = properties.lastIndex
 			properties.forEachIndexed { i, property ->
@@ -89,15 +92,15 @@ class Stylesheet(
 					sb.setLength(sb.length-1)
 			}
 
-			if (selector != null)
+			if (hasSelector)
 				sb.append("}")
 		}
 
 
 		for (child in children) {
-			if (selector != null)
-				for (row in selector.rows)
-					child.render(sb, row.toString(selectorPrefix, _spaceBefore), row.spaceAfter)
+			val rows = selector?.rows
+			if (rows != null && rows.isNotEmpty())
+				rows.forEach { child.render(sb, it.toString(selectorPrefix, _spaceBefore), it.spaceAfter) }
 			else
 				child.render(sb, selectorPrefix)
 		}
@@ -114,7 +117,9 @@ class Stylesheet(
 	class Property(
 			val name: String,
 			val value: Any?
-	)
+	) {
+		override fun toString() = "$name:$value"
+	}
 
 
 	//
@@ -124,7 +129,7 @@ class Stylesheet(
 		val stylesheet = Stylesheet(body)
 		stylesheet.selector = Selector.createEmpty(stylesheet)
 		stylesheet.atRule = "@$rule"
-		children.add(stylesheet)
+		include(stylesheet)
 		return stylesheet
 	}
 
