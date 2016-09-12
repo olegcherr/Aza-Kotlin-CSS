@@ -140,6 +140,8 @@ class Stylesheet(
 	//
 	// MAIN COMMANDS
 	//
+	operator fun CharSequence.invoke(body: Stylesheet.()->Unit) = toSelector().invoke(body)
+
 	fun CharSequence.custom(selector: String, _spaceBefore: Boolean = true, _spaceAfter: Boolean = true, body: (Stylesheet.()->Unit)? = null): Selector {
 		return when (this) {
 			is ASelector -> custom(selector, _spaceBefore, _spaceAfter, body)
@@ -159,7 +161,7 @@ class Stylesheet(
 		}
 	}
 
-	infix fun CharSequence.and(obj: ASelector): Selector {
+	infix fun CharSequence.and(obj: CharSequence): Selector {
 		val sel = toSelector()
 		when (obj) {
 			is Selector -> {
@@ -172,7 +174,7 @@ class Stylesheet(
 				selector.rows.addAll(0, sel.rows)
 				return selector
 			}
-			else -> throw RuntimeException("Unknown kind of corresponding object: ${obj.javaClass.simpleName}")
+			else -> return and(obj.toSelector())
 		}
 	}
 
@@ -189,13 +191,16 @@ class Stylesheet(
 
 
 	//
-	// SUGAR
+	// TRAVERSING
 	//
-	operator fun CharSequence.invoke(body: Stylesheet.()->Unit) = toSelector().invoke(body)
-	operator fun CharSequence.div(obj: ASelector) = child.append(obj)
-	operator fun CharSequence.mod(obj: ASelector) = next.append(obj)
-	operator fun CharSequence.minus(obj: ASelector) = nextAll.append(obj)
-	operator fun CharSequence.rangeTo(obj: ASelector) = children.append(obj)
+	val CharSequence.children: Selector get() = custom(" ", false, false)
+	val CharSequence.child: Selector get() = custom(">", false, false)
+	val CharSequence.next: Selector get() = custom("+", false, false)
+	val CharSequence.nextAll: Selector get() = custom("~", false, false)
+	operator fun CharSequence.div(obj: CharSequence) = child.append(obj.toSelector())
+	operator fun CharSequence.mod(obj: CharSequence) = next.append(obj.toSelector())
+	operator fun CharSequence.minus(obj: CharSequence) = nextAll.append(obj.toSelector())
+	operator fun CharSequence.rangeTo(obj: CharSequence) = children.append(obj.toSelector())
 
 
 	//
@@ -242,15 +247,6 @@ class Stylesheet(
 	//
 	fun CharSequence.c(selector: Any, body: (Stylesheet.()->Unit)? = null) = custom(".$selector", false, true, body)
 	fun CharSequence.id(selector: Any, body: (Stylesheet.()->Unit)? = null) = custom("#$selector", false, true, body)
-
-
-	//
-	// TRAVERSING
-	//
-	val CharSequence.children: Selector get() = custom(" ", false, false)
-	val CharSequence.child: Selector get() = custom(">", false, false)
-	val CharSequence.next: Selector get() = custom("+", false, false)
-	val CharSequence.nextAll: Selector get() = custom("~", false, false)
 
 
 	//

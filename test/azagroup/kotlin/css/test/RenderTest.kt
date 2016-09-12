@@ -181,6 +181,18 @@ class RenderTest : ATest
 			".class1"..c("class2")..c("class3") { width = 2 }
 			".class1"..c("class2")..c("class3").."class4" { width = 3 }
 		}
+
+		testRender(".class1 .class2 span{top:0}.class1 .class2 span .class3{top:1}") {
+			"class1".."class2"..span { top = 0 }
+			"class1".."class2"..span.."class3" { top = 1 }
+		}
+		testRender(".class1 .class2~span{top:0}#id1+.class2 span>.class3{top:1}") {
+			"class1".."class2" - span { top = 0 }
+			"#id1" % "class2"..span / "class3" { top = 1 }
+		}
+		testRender(".class1,.class2,.class3{top:0}") {
+			"class1" and "class2" and "class3" { top = 0 }
+		}
 	}
 
 	@Test fun selectors_pseudoFn() {
