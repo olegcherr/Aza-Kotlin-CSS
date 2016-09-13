@@ -350,7 +350,7 @@ class RenderTest : ATest
 				background = "linear-gradient(top bottom, #000 0%, #fff 100%)" // W3C
 			}
 		}
-		testRender("""a::after{content:" ";content:"you're";content:"\"he said \"nice\"\""}""") {
+		testRender("""a:after{content:" ";content:"you're";content:"\"he said \"nice\"\""}""") {
 			a.after {
 				content = " "
 				content = "you're"

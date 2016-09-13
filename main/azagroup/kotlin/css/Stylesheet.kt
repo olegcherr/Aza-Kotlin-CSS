@@ -378,18 +378,18 @@ class Stylesheet(
 
 
 	//
-	// PSEUDO-ELEMENTS
+	// PSEUDO CLASSES AND ELEMENTS
 	//
 	val CharSequence.active: Selector get() = pseudo(":active") // (CSS1) Selects the active link
-	val CharSequence.after: Selector get() = pseudo("::after") // (CSS2) Insert something after the content of each <p> element
-	val CharSequence.before: Selector get() = pseudo("::before") // (CSS2) Insert something before the content of each <p> element
+	val CharSequence.after: Selector get() = pseudo(":after") // (CSS2) Insert something after the content of each <p> element
+	val CharSequence.before: Selector get() = pseudo(":before") // (CSS2) Insert something before the content of each <p> element
 	val CharSequence.checked: Selector get() = pseudo(":checked") // (CSS3) Selects every checked <input> element
 	val CharSequence.disabled: Selector get() = pseudo(":disabled") // (CSS3) Selects every disabled <input> element
 	val CharSequence.empty: Selector get() = pseudo(":empty") // (CSS3) Selects every <p> element that has no children (including text nodes)
 	val CharSequence.enabled: Selector get() = pseudo(":enabled") // (CSS3) Selects every enabled <input> element
 	val CharSequence.firstChild: Selector get() = pseudo(":first-child") // (CSS2) Selects every <p> element that is the first child of its parent
-	val CharSequence.firstLetter: Selector get() = pseudo("::first-letter") // (CSS1) Selects the first letter of every <p> element
-	val CharSequence.firstLine: Selector get() = pseudo("::first-line") // (CSS1) Selects the first line of every <p> element
+	val CharSequence.firstLetter: Selector get() = pseudo(":first-letter") // (CSS1) Selects the first letter of every <p> element
+	val CharSequence.firstLine: Selector get() = pseudo(":first-line") // (CSS1) Selects the first line of every <p> element
 	val CharSequence.firstOfType: Selector get() = pseudo(":first-of-type") // (CSS3) Selects every <p> element that is the first <p> element of its parent
 	val CharSequence.focus: Selector get() = pseudo(":focus") // (CSS2) Selects the input element which has focus
 	val CharSequence.hover: Selector get() = pseudo(":hover") // (CSS1) Selects links on mouse over
@@ -405,7 +405,7 @@ class Stylesheet(
 	val CharSequence.readWrite: Selector get() = pseudo(":read-write") // (CSS3) Selects input elements with the "readonly" attribute NOT specified
 	val CharSequence.required: Selector get() = pseudo(":required") // (CSS3) Selects input elements with the "required" attribute specified
 	val CharSequence.root: Selector get() = pseudo(":root") // (CSS3) Selects the document's root element
-	val CharSequence.selection: Selector get() = pseudo("::selection") // (Was drafted for CSS3, but removed before the Recommendation status) Selects the portion of an element that is selected by a user
+	val CharSequence.selection: Selector get() = pseudo(":selection") // (Was drafted for CSS3, but removed before the Recommendation status) Selects the portion of an element that is selected by a user
 	val CharSequence.target: Selector get() = pseudo(":target") // (CSS3) Selects the current active #news element (clicked on a URL containing that anchor name)
 	val CharSequence.unvisited: Selector get() = pseudo(":link") // (CSS1) Selects all unvisited links
 	val CharSequence.valid: Selector get() = pseudo(":valid") // (CSS3) Selects all input elements with a valid value
