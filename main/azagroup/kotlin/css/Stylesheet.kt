@@ -1,5 +1,6 @@
 package azagroup.kotlin.css
 
+import java.io.File
 import java.util.ArrayList
 
 
@@ -59,6 +60,12 @@ class Stylesheet(
 
 	fun render() = buildString { render(this) }
 	fun renderTo(sb: StringBuilder) = render(sb)
+
+	fun renderToFile(file: File) {
+		file.delete()
+		file.writeText(render()) // "writeText" is a really clever helper
+	}
+	fun renderToFile(path: String) = renderToFile(File(path))
 
 	private fun render(sb: StringBuilder, selectorPrefix: CharSequence = "", _spaceBefore: Boolean = true) {
 		val selector = selector
