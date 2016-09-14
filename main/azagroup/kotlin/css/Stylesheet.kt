@@ -192,7 +192,7 @@ class Stylesheet(
 			'.' -> this@Stylesheet.c(this.drop(1))
 			'#' -> this@Stylesheet.id(this.drop(1))
 			'@' -> this@Stylesheet.at(this.drop(1)).selector!!
-			else -> this@Stylesheet.c(this)
+			else -> this@Stylesheet.custom(this.toString())
 		}
 	}
 

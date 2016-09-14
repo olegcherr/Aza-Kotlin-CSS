@@ -126,7 +126,7 @@ class RenderTest : ATest
 		}
 
 		testRender(".class1{width:1}#id1{width:2}") {
-			"class1" { width = 1 }
+			".class1" { width = 1 }
 			"#id1" { width = 2 }
 		}
 
@@ -155,13 +155,13 @@ class RenderTest : ATest
 		}
 
 		testRender("div,.class1{width:1}div a{width:2}.class1 a{width:2}") {
-			div and "class1" {
+			div and ".class1" {
 				width = 1
 				a { width = 2 }
 			}
 		}
 		testRender(".class1,.class2{width:1}.class1 a{width:2}.class2 a{width:2}") {
-			"class1" and "class2" {
+			".class1" and ".class2" {
 				width = 1
 				a { width = 2 }
 			}
@@ -172,26 +172,26 @@ class RenderTest : ATest
 			".class1".children.c("class2") { width = 2 }
 		}
 		testRender(".class1 .class2{width:1}.class1 div{width:2}div #id1{width:3}") {
-			"class1".."class2" { width = 1 }
-			"class1"..div { width = 2 }
+			".class1"..".class2" { width = 1 }
+			".class1"..div { width = 2 }
 			div.."#id1" { width = 3 }
 		}
 		testRender(".class1 .class2{width:1}.class1 .class2 .class3{width:2}.class1 .class2 .class3 .class4{width:3}") {
 			".class1"..c("class2") { width = 1 }
 			".class1"..c("class2")..c("class3") { width = 2 }
-			".class1"..c("class2")..c("class3").."class4" { width = 3 }
+			".class1"..c("class2")..c("class3")..".class4" { width = 3 }
 		}
 
 		testRender(".class1 .class2 span{top:0}.class1 .class2 span .class3{top:1}") {
-			"class1".."class2"..span { top = 0 }
-			"class1".."class2"..span.."class3" { top = 1 }
+			".class1"..".class2"..span { top = 0 }
+			".class1"..".class2"..span..".class3" { top = 1 }
 		}
 		testRender(".class1 .class2~span{top:0}#id1+.class2 span>.class3{top:1}") {
-			"class1".."class2" - span { top = 0 }
-			"#id1" % "class2"..span / "class3" { top = 1 }
+			".class1"..".class2" - span { top = 0 }
+			"#id1" % ".class2"..span / ".class3" { top = 1 }
 		}
 		testRender(".class1,.class2,.class3{top:0}") {
-			"class1" and "class2" and "class3" { top = 0 }
+			".class1" and ".class2" and ".class3" { top = 0 }
 		}
 	}
 
@@ -205,12 +205,12 @@ class RenderTest : ATest
 			div.a.nthChild(2) and span { width = 1 }
 		})
 		testRender(".items:not(li){width:1}.items:not(li),span{width:1}", {
-			"items".not(li) { width = 1 }
-			"items".not(li) and span { width = 1 }
+			".items".not(li) { width = 1 }
+			".items".not(li) and span { width = 1 }
 		})
 		testRender(".items:some{width:1}.items:some(){width:1}", {
-			"items".pseudo(":some") { width = 1 }
-			"items".pseudoFn(":some()") { width = 1 }
+			".items".pseudo(":some") { width = 1 }
+			".items".pseudoFn(":some()") { width = 1 }
 		})
 	}
 
@@ -245,6 +245,19 @@ class RenderTest : ATest
 		testRender("""a[href^="http://"]{width:10px}""", {
 			a["href", startsWith, "http://"] { width = 10.px }
 		})
+	}
+
+	@Test fun selectors_custom() {
+		testRender("aside{top:0}aside:hover{top:1}aside div{top:2}aside .class1{top:3}") {
+			"aside" { top = 0 }
+			"aside".hover { top = 1 }
+			"aside".div { top = 2 }
+			"aside"..".class1" { top = 3 }
+		}
+		testRender("""_::selection, .selector:not([attr*='']){top:0}.selector\{top:1}""") {
+			"_::selection, .selector:not([attr*=''])" { top = 0 }
+			".selector\\" { top = 1 }
+		}
 	}
 
 	@Test fun selectors_atRules() {
@@ -301,10 +314,10 @@ class RenderTest : ATest
 
 		testRender("@-webkit-keyframes animation1{from{top:0}30%{top:50px}68%,72%{top:70px}to{top:100px}}") {
 			at("-webkit-keyframes animation1") {
-				custom("from") { top = 0.px }
-				custom("30%") { top = 50.px }
-				custom("68%,72%") { top = 70.px }
-				custom("to") { top = 100.px }
+				"from" { top = 0.px }
+				"30%" { top = 50.px }
+				"68%,72%" { top = 70.px }
+				"to" { top = 100.px }
 			}
 		}
 		testRender("@font-face{font-family:Bitstream Vera Serif Bold;src:url(VeraSeBd.ttf);font-weight:bold}@font-face{font-family:Graublau Web;src:url(GraublauWeb.eot);src:local('☺'), url('GraublauWeb.woff') format('woff'), url('GraublauWeb.ttf') format('truetype')}") {
