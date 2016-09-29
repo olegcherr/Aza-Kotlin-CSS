@@ -1,5 +1,5 @@
 group 'azagroup.kotlin'
-version '1.0'
+version library_version
 
 buildscript {
 	repositories {
@@ -25,4 +25,20 @@ dependencies {
 	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
 	testCompile "junit:junit:$junit_version"
+}
+
+
+// PUBLISHING
+
+apply plugin: 'maven-publish'
+
+publishing {
+	publications {
+		MyPublication(MavenPublication) {
+			from components.java
+			groupId 'azagroup.kotlin'
+			artifactId 'aza-kotlin-css'
+			version library_version
+		}
+	}
 }

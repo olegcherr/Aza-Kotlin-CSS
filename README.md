@@ -2,6 +2,18 @@
 
 AzaKotlinCSS is a DSL (Domain-specific language) designed for writing CSS using Kotlin – the greatest programming language in the World! :boom::fire::+1:
 
+### Installation
+
+```gradle
+repositories {
+	maven { url 'http://dl.bintray.com/azagroup/maven' }
+}
+
+dependencies {
+	compile 'azagroup.kotlin:aza-kotlin-css:1.0'
+}
+```
+
 ### Usage
 
 ```kotlin
