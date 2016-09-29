@@ -466,3 +466,8 @@ Stylesheet {
 // But the better way would be:
 // b,strong{color:#fff}b span,strong span{color:#f00}
 ```
+
+## License
+
+This software is released under the MIT License.
+See [LICENSE.txt](LICENSE.txt) for details.
