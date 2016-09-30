@@ -32,6 +32,10 @@ dependencies {
 
 apply plugin: 'maven-publish'
 
+task sourceJar(type: Jar) {
+	from sourceSets.main.allSource
+}
+
 publishing {
 	publications {
 		MyPublication(MavenPublication) {
@@ -39,6 +43,10 @@ publishing {
 			groupId 'azagroup.kotlin'
 			artifactId 'aza-kotlin-css'
 			version library_version
+
+			artifact sourceJar {
+				classifier "sources"
+			}
 		}
 	}
 }
