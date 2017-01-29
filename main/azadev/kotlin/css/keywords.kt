@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package azagroup.kotlin.css
+package azadev.kotlin.css
 
 
 // https://www.w3.org/TR/CSS21/propidx.html

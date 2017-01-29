@@ -1,4 +1,4 @@
-package azagroup.kotlin.css
+package azadev.kotlin.css
 
 
 interface ASelector : CharSequence

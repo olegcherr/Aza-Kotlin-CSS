@@ -1,4 +1,4 @@
-package azagroup.kotlin.css.colors
+package azadev.kotlin.css.colors
 
 
 class HSLValues(

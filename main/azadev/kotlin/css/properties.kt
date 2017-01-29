@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package azagroup.kotlin.css
+package azadev.kotlin.css
 
 // CSS Reference
 // http://www.w3schools.com/cssref/default.asp

@@ -1,4 +1,4 @@
-group 'azagroup.kotlin'
+group 'azadev.kotlin'
 version library_version
 
 buildscript {
@@ -40,7 +40,7 @@ publishing {
 	publications {
 		MyPublication(MavenPublication) {
 			from components.java
-			groupId 'azagroup.kotlin'
+			groupId 'azadev.kotlin'
 			artifactId 'aza-kotlin-css'
 			version library_version
 

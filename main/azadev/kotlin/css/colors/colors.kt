@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package azagroup.kotlin.css.colors
+package azadev.kotlin.css.colors
 
 
 fun hex(hex: String) = Color.fromHex(hex)!!

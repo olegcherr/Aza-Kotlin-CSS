@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-	compile 'azagroup.kotlin:aza-kotlin-css:1.0'
+	compile 'azadev.kotlin:aza-kotlin-css:1.0'
 }
 ```
 

@@ -1,6 +1,6 @@
-package azagroup.kotlin.css
+package azadev.kotlin.css
 
-import java.util.ArrayList
+import java.util.*
 
 
 class Selector(

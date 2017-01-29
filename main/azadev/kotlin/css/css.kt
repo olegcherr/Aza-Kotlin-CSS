@@ -1,10 +1,10 @@
 @file:Suppress("unused")
 
-package azagroup.kotlin.css
+package azadev.kotlin.css
 
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.util.Locale
+import java.util.*
 
 
 fun stylesheet(body: Stylesheet.()->Unit) = body

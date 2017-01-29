@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package azagroup.kotlin.css.dimens
+package azadev.kotlin.css.dimens
 
 
 val Number.px: LinearDimension get() = dimen(this, LinearUnits.PX)

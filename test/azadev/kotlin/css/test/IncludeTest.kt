@@ -1,6 +1,6 @@
-package azagroup.kotlin.css.test
+package azadev.kotlin.css.test
 
-import azagroup.kotlin.css.*
+import azadev.kotlin.css.*
 import org.junit.*
 
 

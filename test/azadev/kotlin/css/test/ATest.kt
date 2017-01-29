@@ -1,6 +1,6 @@
-package azagroup.kotlin.css.test
+package azadev.kotlin.css.test
 
-import azagroup.kotlin.css.Stylesheet
+import azadev.kotlin.css.Stylesheet
 import org.junit.Assert.*
 
 

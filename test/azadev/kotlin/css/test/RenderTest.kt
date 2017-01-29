@@ -1,8 +1,8 @@
-package azagroup.kotlin.css.test
+package azadev.kotlin.css.test
 
-import azagroup.kotlin.css.*
-import azagroup.kotlin.css.colors.*
-import azagroup.kotlin.css.dimens.*
+import azadev.kotlin.css.*
+import azadev.kotlin.css.colors.*
+import azadev.kotlin.css.dimens.*
 import org.junit.*
 import org.junit.Assert.*
 

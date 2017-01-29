@@ -1,10 +1,10 @@
-package azagroup.kotlin.css.test
+package azadev.kotlin.css.test
 
-import azagroup.kotlin.css.*
+import azadev.kotlin.css.*
 import org.junit.*
 import org.junit.Assert.*
 import java.io.File
-import java.util.Date
+import java.util.*
 
 
 class RenderToFileTest : ATest

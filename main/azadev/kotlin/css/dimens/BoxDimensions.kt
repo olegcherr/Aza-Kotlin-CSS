@@ -1,6 +1,6 @@
-package azagroup.kotlin.css.dimens
+package azadev.kotlin.css.dimens
 
-import azagroup.kotlin.css.dimens.LinearDimension.Companion.from as dimen
+import azadev.kotlin.css.dimens.LinearDimension.Companion.from as dimen
 
 
 class BoxDimensions(

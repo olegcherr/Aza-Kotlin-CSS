@@ -1,9 +1,10 @@
-package azagroup.kotlin.css
+package azadev.kotlin.css
 
+import azadev.kotlin.css.colors.hex
 import kotlin.reflect.KProperty
 
 
-class PropertyHandler(
+class ColorPropertyHandler(
 		val name: String
 ) {
 	@Suppress("USELESS_CAST")
@@ -11,6 +12,9 @@ class PropertyHandler(
 			= stylesheet.getProperty(name) as Any?
 
 	operator fun setValue(stylesheet: Stylesheet, property: KProperty<*>, value: Any?) {
-		stylesheet.setProperty(name, value)
+		stylesheet.setProperty(name, when (value) {
+			is Int -> hex(value)
+			else -> value
+		})
 	}
 }
