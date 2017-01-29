@@ -48,6 +48,6 @@ class IncludeTest : ATest
 			}
 		}
 
-		testRender("div{margin:0;zoom:1}div::after{content:\" \";display:block;clear:both}", css)
+		testRender("div{margin:0;zoom:1}div:after{content:\" \";display:block;clear:both}", css)
 	}
 }
